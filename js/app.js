@@ -344,16 +344,21 @@ checkoutModal.addEventListener('click', (e) => {
 });
 
 confirmCheckoutBtn.addEventListener('click', async () => {
-    const clientName = document.getElementById('client-name').value.trim();
+    const clientFirstName = document.getElementById('client-firstname').value.trim();
+    const clientLastName = document.getElementById('client-lastname').value.trim();
+    const clientName = `${clientFirstName} ${clientLastName}`.trim();
     const clientPhone = document.getElementById('client-phone').value.trim();
     const clientAddress = document.getElementById('client-address').value.trim();
-    const clientNotes = document.getElementById('client-notes').value.trim();
     
-    if(!clientName || !clientPhone || !clientAddress) {
-        return alert("Veuillez renseigner votre nom, numéro et adresse de livraison.");
+    // Le commentaire peut être absent si on suit strictement la maquette, mais on le garde au cas où
+    const notesEl = document.getElementById('client-notes');
+    const clientNotes = notesEl ? notesEl.value.trim() : '';
+    
+    if(!clientFirstName || !clientLastName || !clientPhone || !clientAddress) {
+        return alert("Veuillez renseigner votre prénom, nom, numéro et adresse de livraison.");
     }
     
-    confirmCheckoutBtn.textContent = "Génération...";
+    confirmCheckoutBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Génération...';
     confirmCheckoutBtn.disabled = true;
     
     // Générer un ID unique court
@@ -409,6 +414,6 @@ confirmCheckoutBtn.addEventListener('click', async () => {
         alert("Une erreur est survenue lors de la création de votre commande.");
     }
     
-    confirmCheckoutBtn.innerHTML = `Continuer sur WhatsApp <i class="fa-brands fa-whatsapp"></i>`;
+    confirmCheckoutBtn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Confirmer et envoyer sur WhatsApp`;
     confirmCheckoutBtn.disabled = false;
 });
