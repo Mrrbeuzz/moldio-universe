@@ -378,7 +378,8 @@ const closeCheckoutBtn = document.getElementById('close-checkout-btn');
 const confirmCheckoutBtn = document.getElementById('confirm-checkout-btn');
 
 checkoutBtn.addEventListener('click', () => {
-    if(cart.length === 0) return alert("Votre panier est vide.");
+    if(cart.length === 0) return showToast("Votre panier est vide.");
+    cartModal.classList.remove('active');
     checkoutModal.classList.add('active');
 });
 
