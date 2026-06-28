@@ -234,6 +234,7 @@ header {
 
 .hero-content {
   max-width: 600px;
+  position: relative;
   z-index: 2;
 }
 
@@ -700,8 +701,9 @@ footer {
 .checkout-modal-container {
   width: 90%;
   max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
   border-radius: 12px;
-  overflow: hidden;
   box-shadow: 0 20px 40px rgba(0,0,0,0.8);
   display: flex;
   flex-direction: column;
