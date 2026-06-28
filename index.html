@@ -102,21 +102,23 @@
 
     <!-- Checkout Modal -->
     <div class="modal-overlay" id="checkout-modal">
-        <div class="product-modal" style="max-width: 500px; padding: 30px;">
+        <div class="product-modal" style="max-width: 450px; padding: 30px; text-align: center;">
             <button class="close-btn" id="close-checkout-btn" style="position: absolute; top: 20px; right: 20px; z-index: 10;"><i class="fa-solid fa-xmark"></i></button>
-            <h2 style="margin-bottom: 20px; font-family: var(--font-serif); color: var(--brand-primary);">Détails de Livraison</h2>
+            <h2 style="margin-bottom: 25px; font-family: var(--font-serif); color: var(--brand-primary); font-size: 1.8rem;">Détails de Livraison</h2>
             
-            <div style="margin-bottom: 15px;">
-                <input type="text" id="client-name" placeholder="Votre Prénom et Nom *" style="width: 100%; margin-bottom: 15px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;" required>
+            <div style="text-align: left; margin-bottom: 15px;">
+                <input type="text" id="client-name" placeholder="Prénom et Nom *" style="width: 100%; margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: white; border-radius: 6px; font-family: var(--font-sans);" required>
                 
-                <input type="tel" id="client-phone" placeholder="Votre numéro de téléphone *" style="width: 100%; margin-bottom: 15px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;" required>
+                <input type="tel" id="client-phone" placeholder="Numéro WhatsApp *" style="width: 100%; margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: white; border-radius: 6px; font-family: var(--font-sans);" required>
                 
-                <input type="text" id="client-address" placeholder="Adresse de livraison complète *" style="width: 100%; margin-bottom: 15px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;" required>
+                <input type="text" id="client-address" placeholder="Adresse complète *" style="width: 100%; margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: white; border-radius: 6px; font-family: var(--font-sans);" required>
                 
-                <textarea id="client-notes" rows="3" placeholder="Commentaire facultatif (ex: taille, couleur, instruction de livraison...)" style="width: 100%; margin-bottom: 20px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;"></textarea>
+                <textarea id="client-notes" rows="3" placeholder="Commentaire (ex: taille, couleur, indication)" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: white; border-radius: 6px; font-family: var(--font-sans);"></textarea>
             </div>
 
-            <button class="btn-primary" id="confirm-checkout-btn" style="width: 100%;">Confirmer et ouvrir WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+            <div style="margin-top: 25px;">
+                <button class="btn-primary" id="confirm-checkout-btn" style="padding: 12px 30px; font-size: 1rem; border-radius: 30px;">Continuer sur WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+            </div>
         </div>
     </div>
 

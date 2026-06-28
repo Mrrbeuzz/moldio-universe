@@ -409,6 +409,6 @@ confirmCheckoutBtn.addEventListener('click', async () => {
         alert("Une erreur est survenue lors de la création de votre commande.");
     }
     
-    confirmCheckoutBtn.innerHTML = `Confirmer et ouvrir WhatsApp <i class="fa-brands fa-whatsapp"></i>`;
+    confirmCheckoutBtn.innerHTML = `Continuer sur WhatsApp <i class="fa-brands fa-whatsapp"></i>`;
     confirmCheckoutBtn.disabled = false;
 });
