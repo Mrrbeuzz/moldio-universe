@@ -161,8 +161,14 @@ window.addToCart = (productId) => {
     updateCartUI();
     
     // Feedback visual
-    openCartBtn.classList.add('bounce');
-    setTimeout(() => openCartBtn.classList.remove('bounce'), 300);
+    const badge = document.getElementById('cart-count');
+    if (badge) {
+        badge.classList.remove('bump');
+        void badge.offsetWidth; // Force reflow
+        badge.classList.add('bump');
+    }
+    
+    showToast(`${product.name} ajouté au panier !`);
 };
 
 window.updateQty = (productId, change) => {
@@ -312,6 +318,35 @@ document.getElementById('submit-comment-btn').addEventListener('click', async ()
     btn.textContent = "Envoyer";
     btn.disabled = false;
 });
+
+// Handle promo code toggle visually
+promoToggleBtn.addEventListener('click', () => {
+    promoInputGroup.style.display = promoInputGroup.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// --- Toast Notification ---
+window.showToast = (message) => {
+    let container = document.getElementById('toast-container');
+    if(!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<i class="fa-solid fa-check-circle" style="color: white;"></i> <span>${message}</span>`;
+    
+    container.appendChild(toast);
+    
+    // Clean up after CSS animation completes (3 seconds)
+    setTimeout(() => {
+        if(toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+};
 
 // --- Promo Code ---
 applyPromoBtn.addEventListener('click', async () => {
