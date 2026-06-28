@@ -319,10 +319,7 @@ document.getElementById('submit-comment-btn').addEventListener('click', async ()
     btn.disabled = false;
 });
 
-// Handle promo code toggle visually
-promoToggleBtn.addEventListener('click', () => {
-    promoInputGroup.style.display = promoInputGroup.style.display === 'flex' ? 'none' : 'flex';
-});
+// Handle promo code toggle visually (removed as it caused ReferenceError)
 
 // --- Toast Notification ---
 window.showToast = (message) => {
