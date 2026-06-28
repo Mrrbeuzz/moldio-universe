@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadCategories();
     await loadProducts();
     await loadSiteContent();
+    await loadSiteSettings();
 });
 
 // --- Fetch Data from Firebase ---
@@ -57,6 +58,58 @@ async function loadSiteContent() {
         console.error("Erreur chargement contenu:", error);
     }
 }
+
+// --- Dynamic Settings (Slider, Banners) ---
+let currentSliderImages = [];
+let currentSliderIndex = 0;
+
+async function loadSiteSettings() {
+    try {
+        const docSnap = await getDoc(doc(db, "site", "settings"));
+        if(docSnap.exists()) {
+            const data = docSnap.data();
+            
+            const topBar = document.getElementById('top-bar');
+            if(data.topbar && data.topbar.trim() !== '') {
+                document.getElementById('top-bar-text').textContent = data.topbar;
+                topBar.style.display = 'block';
+            } else {
+                topBar.style.display = 'none';
+            }
+            
+            const bannerSection = document.getElementById('promo-banner-section');
+            if(data.promoBanner && data.promoBanner.image) {
+                document.getElementById('promo-banner-img').src = data.promoBanner.image;
+                document.getElementById('promo-banner-link').href = data.promoBanner.link || '#';
+                bannerSection.style.display = 'block';
+            } else {
+                bannerSection.style.display = 'none';
+            }
+            
+            if(data.slider && data.slider.length > 0) {
+                currentSliderImages = data.slider;
+                startHeroSlider();
+            }
+        }
+    } catch(e) {
+        console.error("Erreur chargement settings:", e);
+    }
+}
+
+function startHeroSlider() {
+    const bgLayer = document.getElementById('hero-bg-layer');
+    if(!bgLayer || currentSliderImages.length === 0) return;
+    
+    bgLayer.style.backgroundImage = `url(${currentSliderImages[0]})`;
+    
+    if(currentSliderImages.length > 1) {
+        setInterval(() => {
+            currentSliderIndex = (currentSliderIndex + 1) % currentSliderImages.length;
+            bgLayer.style.backgroundImage = `url(${currentSliderImages[currentSliderIndex]})`;
+        }, 5000);
+    }
+}
+
 async function loadCategories() {
     try {
         const querySnapshot = await getDocs(collection(db, "categories"));

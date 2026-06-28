@@ -18,6 +18,13 @@
 </head>
 <body>
 
+    <!-- Top Announcement Bar -->
+    <div class="top-bar" id="top-bar" style="display: none;">
+        <div class="container">
+            <p id="top-bar-text"></p>
+        </div>
+    </div>
+
     <!-- Header & Navigation -->
     <header>
         <div class="container nav-container">
@@ -51,7 +58,8 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero-section">
+        <div class="hero-bg-layer" id="hero-bg-layer"></div>
         <div class="container">
             <div class="hero-content fade-in">
                 <h1 class="hero-title">L'Élégance à l'état pur.</h1>
@@ -68,6 +76,15 @@
             <div class="category-grid" id="category-grid">
                 <!-- Injecté via JS -->
             </div>
+        </div>
+    </section>
+
+    <!-- Promo Banner Section -->
+    <section class="promo-banner-section" id="promo-banner-section" style="display: none; padding: 20px 0;">
+        <div class="container">
+            <a href="#" id="promo-banner-link">
+                <img id="promo-banner-img" src="" alt="Promotion" style="width: 100%; border-radius: 12px; object-fit: cover; max-height: 250px;">
+            </a>
         </div>
     </section>
 

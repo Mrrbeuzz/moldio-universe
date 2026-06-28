@@ -86,6 +86,7 @@
                 <li><a class="nav-link" data-target="products"><i class="fa-solid fa-box"></i> Produits</a></li>
                 <li><a class="nav-link" data-target="categories"><i class="fa-solid fa-tags"></i> Catégories</a></li>
                 <li><a class="nav-link" data-target="promo"><i class="fa-solid fa-ticket"></i> Codes Promo</a></li>
+                <li><a class="nav-link" data-target="settings"><i class="fa-solid fa-image"></i> Visuels & Pubs</a></li>
                 <li><a class="nav-link" data-target="content"><i class="fa-solid fa-file-pen"></i> Contenu</a></li>
                 <li style="margin-top: 50px;"><a id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a></li>
             </ul>
@@ -249,6 +250,49 @@
                     </div>
                     
                     <button class="btn-primary" id="save-content-btn" style="margin-top: 20px;">Enregistrer le contenu</button>
+                </div>
+            </div>
+
+            <!-- Settings / Visuals Panel -->
+            <div class="panel" id="settings">
+                <h2 style="margin-bottom: 20px;">Visuels & Publicités</h2>
+                
+                <div class="admin-form" style="margin-bottom: 40px;">
+                    <h3>Barre d'Annonce (Top Bar)</h3>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <input type="text" id="topbar-text" placeholder="Ex: Livraison gratuite ce week-end ! Laissez vide pour cacher.">
+                    </div>
+                    <button class="btn-primary" id="save-topbar-btn">Enregistrer</button>
+                </div>
+
+                <div class="admin-form" style="margin-bottom: 40px;">
+                    <h3>Bannière Promotionnelle</h3>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Affiche une image cliquable entre les catégories et les produits.</p>
+                    <div class="form-group">
+                        <label>Image (JPG/PNG)</label>
+                        <input type="file" id="promo-banner-file" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Lien de redirection (ex: #shop)</label>
+                        <input type="text" id="promo-banner-link-input" placeholder="#shop">
+                    </div>
+                    <button class="btn-primary" id="save-banner-btn">Enregistrer Bannière</button>
+                    <button class="btn-outline" id="remove-banner-btn" style="margin-top: 10px; width: 100%;">Supprimer la bannière</button>
+                </div>
+                
+                <div class="admin-form">
+                    <h3>Carrousel Accueil (Slider)</h3>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Ajoutez jusqu'à 4 images qui défileront en fond d'écran. (Laissez vide pour le design par défaut).</p>
+                    <div class="form-group">
+                        <label>Nouvelle Image</label>
+                        <input type="file" id="slider-file" accept="image/*">
+                    </div>
+                    <button class="btn-primary" id="add-slider-img-btn">Ajouter au Slider</button>
+                    
+                    <h4 style="margin-top: 30px; margin-bottom: 10px;">Images actuelles :</h4>
+                    <ul id="slider-list" style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Injecté par JS -->
+                    </ul>
                 </div>
             </div>
 

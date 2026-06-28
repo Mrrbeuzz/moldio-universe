@@ -191,6 +191,18 @@ header {
   to { opacity: 0; transform: translateY(-10px); }
 }
 
+/* --- Top Bar --- */
+.top-bar {
+  background: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+  color: white;
+  text-align: center;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  z-index: 1001;
+  position: relative;
+}
+
 /* --- Hero Section --- */
 .hero {
   min-height: 100vh;
@@ -198,7 +210,26 @@ header {
   align-items: center;
   position: relative;
   padding-top: 80px;
-  background: radial-gradient(circle at 70% 30%, rgba(138, 31, 39, 0.15) 0%, rgba(11, 11, 13, 1) 60%);
+  background: var(--bg-color);
+  overflow: hidden;
+}
+
+.hero-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.hero-bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(138, 31, 39, 0.3) 0%, rgba(11, 11, 13, 1) 70%);
 }
 
 .hero-content {

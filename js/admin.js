@@ -29,6 +29,7 @@ navLinks.forEach(link => {
         if(link.dataset.target === 'products') { loadProductsAdmin(); loadCategoriesForSelect(); }
         if(link.dataset.target === 'categories') loadCategoriesAdmin();
         if(link.dataset.target === 'content') loadContentAdmin();
+        if(link.dataset.target === 'settings') loadSettingsAdmin();
     });
 });
 
@@ -194,6 +195,99 @@ async function convertToWebP(file) {
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
+}
+
+// --- Settings & Visuals Logic ---
+let currentSettings = { slider: [], topbar: '', promoBanner: { image: '', link: '' } };
+
+async function loadSettingsAdmin() {
+    try {
+        const docSnap = await getDoc(doc(db, "site", "settings"));
+        if(docSnap.exists()) {
+            currentSettings = { ...currentSettings, ...docSnap.data() };
+        }
+        
+        document.getElementById('topbar-text').value = currentSettings.topbar || '';
+        document.getElementById('promo-banner-link-input').value = currentSettings.promoBanner?.link || '';
+        
+        renderSliderAdmin();
+    } catch (e) {
+        console.error("Erreur chargement paramètres:", e);
+    }
+}
+
+document.getElementById('save-topbar-btn').addEventListener('click', async (e) => {
+    e.target.textContent = "Enregistrement...";
+    currentSettings.topbar = document.getElementById('topbar-text').value;
+    await setDoc(doc(db, "site", "settings"), currentSettings, { merge: true });
+    e.target.textContent = "Enregistrer";
+    alert("Barre d'annonce mise à jour !");
+});
+
+document.getElementById('save-banner-btn').addEventListener('click', async (e) => {
+    const fileInput = document.getElementById('promo-banner-file');
+    const linkInput = document.getElementById('promo-banner-link-input').value;
+    
+    e.target.textContent = "Patientez...";
+    if(fileInput.files.length > 0) {
+        const base64 = await convertToWebP(fileInput.files[0]);
+        currentSettings.promoBanner = { image: base64, link: linkInput };
+    } else {
+        if(!currentSettings.promoBanner) currentSettings.promoBanner = {};
+        currentSettings.promoBanner.link = linkInput;
+    }
+    
+    await setDoc(doc(db, "site", "settings"), currentSettings, { merge: true });
+    e.target.textContent = "Enregistrer Bannière";
+    alert("Bannière mise à jour !");
+});
+
+document.getElementById('remove-banner-btn').addEventListener('click', async () => {
+    if(!confirm("Supprimer la bannière ?")) return;
+    currentSettings.promoBanner = { image: '', link: '' };
+    await setDoc(doc(db, "site", "settings"), currentSettings, { merge: true });
+    document.getElementById('promo-banner-link-input').value = '';
+    alert("Bannière supprimée !");
+});
+
+document.getElementById('add-slider-img-btn').addEventListener('click', async (e) => {
+    const fileInput = document.getElementById('slider-file');
+    if(fileInput.files.length === 0) return alert("Sélectionnez une image.");
+    if(currentSettings.slider && currentSettings.slider.length >= 4) return alert("Maximum 4 images autorisées.");
+    
+    e.target.textContent = "Compression...";
+    const base64 = await convertToWebP(fileInput.files[0]);
+    
+    if(!currentSettings.slider) currentSettings.slider = [];
+    currentSettings.slider.push(base64);
+    
+    e.target.textContent = "Sauvegarde...";
+    await setDoc(doc(db, "site", "settings"), currentSettings, { merge: true });
+    fileInput.value = '';
+    e.target.textContent = "Ajouter au Slider";
+    renderSliderAdmin();
+});
+
+window.deleteSliderImg = async (index) => {
+    if(!confirm("Supprimer cette image du carrousel ?")) return;
+    currentSettings.slider.splice(index, 1);
+    await setDoc(doc(db, "site", "settings"), currentSettings, { merge: true });
+    renderSliderAdmin();
+};
+
+function renderSliderAdmin() {
+    const ul = document.getElementById('slider-list');
+    if(!currentSettings.slider || currentSettings.slider.length === 0) {
+        ul.innerHTML = '<li style="color:var(--text-muted);">Aucune image. Le fond par défaut sera utilisé.</li>';
+        return;
+    }
+    ul.innerHTML = currentSettings.slider.map((img, index) => `
+        <li style="display: flex; align-items: center; gap: 15px; background: var(--bg-color-alt); padding: 10px; border-radius: 8px;">
+            <img src="${img}" style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px;">
+            <span>Image ${index + 1}</span>
+            <button class="btn-outline" style="padding: 5px 10px; margin-left: auto; color: red;" onclick="deleteSliderImg(${index})"><i class="fa-solid fa-trash"></i></button>
+        </li>
+    `).join('');
 }
 
 addProdBtn.addEventListener('click', async () => {
