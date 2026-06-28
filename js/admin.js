@@ -1,4 +1,4 @@
-import { auth, db, storage, signInWithEmailAndPassword, onAuthStateChanged, signOut, collection, getDocs, addDoc, serverTimestamp, query, where, doc, ref, uploadBytes, getDownloadURL, getDoc, deleteDoc, setDoc } from './firebase-config.js';
+import { auth, db, signInWithEmailAndPassword, onAuthStateChanged, signOut, collection, getDocs, addDoc, serverTimestamp, query, where, doc, getDoc, deleteDoc, setDoc } from './firebase-config.js';
 import { updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 // --- DOM Elements ---
@@ -151,9 +151,8 @@ async function convertToWebP(file) {
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
                 
-                canvas.toBlob((blob) => {
-                    resolve(blob);
-                }, "image/webp", 0.85); // 85% de qualité
+                const dataUrl = canvas.toDataURL("image/webp", 0.85); // 85% de qualité
+                resolve(dataUrl);
             };
             img.onerror = reject;
             img.src = e.target.result;
@@ -178,21 +177,15 @@ addProdBtn.addEventListener('click', async () => {
     
     try {
         const file = fileInput.files[0];
-        // Conversion en WebP
-        const webpBlob = await convertToWebP(file);
+        // Conversion en WebP (Base64 Data URL)
+        const webpDataUrl = await convertToWebP(file);
         
-        // Upload vers Firebase Storage
-        const filename = `products/${Date.now()}.webp`;
-        const storageRef = ref(storage, filename);
-        await uploadBytes(storageRef, webpBlob);
-        const downloadURL = await getDownloadURL(storageRef);
-        
-        // Sauvegarde dans Firestore
+        // Sauvegarde directe dans Firestore (l'image est compressée donc elle tient dans le document)
         await addDoc(collection(db, "products"), {
             name: name,
             category: category,
             price: price,
-            imageUrl: downloadURL,
+            imageUrl: webpDataUrl,
             createdAt: serverTimestamp()
         });
         
