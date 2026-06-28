@@ -329,6 +329,13 @@ applyPromoBtn.addEventListener('click', async () => {
 checkoutBtn.addEventListener('click', async () => {
     if(cart.length === 0) return alert("Votre panier est vide.");
     
+    const clientName = document.getElementById('client-name').value.trim();
+    const clientPhone = document.getElementById('client-phone').value.trim();
+    
+    if(!clientName || !clientPhone) {
+        return alert("Veuillez renseigner votre nom et votre numéro pour valider la commande.");
+    }
+    
     checkoutBtn.textContent = "Génération...";
     checkoutBtn.disabled = true;
     
@@ -338,6 +345,8 @@ checkoutBtn.addEventListener('click', async () => {
     
     const orderData = {
         orderId: orderId,
+        clientName: clientName,
+        clientPhone: clientPhone,
         items: cart,
         total: finalTotal,
         discount: currentDiscount,
@@ -357,6 +366,8 @@ checkoutBtn.addEventListener('click', async () => {
         
         // Construire le message WhatsApp
         let msg = `*NOUVELLE COMMANDE MOLDIO UNIVERSE*\n\n`;
+        msg += `*Client:* ${clientName}\n`;
+        msg += `*Numéro:* ${clientPhone}\n`;
         msg += `*Référence:* ${orderId}\n`;
         msg += `*Montant Total:* ${finalTotal} FCFA\n\n`;
         msg += `*Détails :*\n`;

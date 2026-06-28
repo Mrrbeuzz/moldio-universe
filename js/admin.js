@@ -99,6 +99,7 @@ async function loadOrders() {
         tbody.innerHTML = orders.map(o => `
             <tr>
                 <td><strong>${o.orderId}</strong></td>
+                <td>${o.clientName || 'Inconnu'}<br><small style="color:var(--text-muted);">${o.clientPhone || 'N/A'}</small></td>
                 <td>${o.createdAt ? new Date(o.createdAt.toDate()).toLocaleDateString() : 'N/A'}</td>
                 <td>${o.total} FCFA</td>
                 <td><span class="status-badge ${o.status === 'pending' ? 'status-pending' : 'status-validated'}">${o.status === 'pending' ? 'En attente' : 'Validée'}</span></td>
