@@ -44,6 +44,23 @@
         .admin-form { background: var(--bg-color-alt); padding: 30px; border-radius: 12px; border: 1px solid var(--glass-border); max-width: 600px; }
         .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
         .form-group label { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-layout { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--glass-border); padding: 20px; }
+            .sidebar h2 { margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
+            .menu-list { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 10px; }
+            .menu-list li { margin: 0 !important; }
+            .menu-list a { font-size: 0.85rem; padding: 8px 12px; text-align: center; }
+            .main-content { padding: 20px; }
+            
+            /* Tables */
+            table { display: block; overflow-x: auto; white-space: nowrap; }
+            
+            .admin-form { padding: 20px; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
