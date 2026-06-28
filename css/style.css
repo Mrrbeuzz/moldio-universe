@@ -620,17 +620,18 @@ footer {
   border-top: 1px solid var(--glass-border);
 }
 
-/* Checkout Modal Redesign (Mockup Match) */
+/* Checkout Modal Redesign (Mockup Match - Site Colors) */
 .checkout-modal-container {
   width: 90%;
   max-width: 450px;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
   display: flex;
   flex-direction: column;
   transform: translateY(20px);
   transition: var(--transition);
+  border: 1px solid var(--glass-border);
 }
 
 .modal-overlay.active .checkout-modal-container {
@@ -638,17 +639,18 @@ footer {
 }
 
 .cm-banner {
-  background: linear-gradient(180deg, #32261E 0%, #201A16 100%);
+  background: var(--bg-color-alt);
   padding: 30px 20px;
   text-align: center;
   position: relative;
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .cm-banner .close-btn {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg);
   border: none;
   border-radius: 50%;
   width: 30px;
@@ -656,7 +658,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #a0a0a0;
+  color: var(--text-muted);
   cursor: pointer;
   transition: var(--transition);
 }
@@ -667,7 +669,7 @@ footer {
 }
 
 .cm-icon-wrapper {
-  background: rgba(219, 186, 85, 0.15);
+  background: rgba(138, 31, 39, 0.15); /* Brand Primary with opacity */
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -678,12 +680,12 @@ footer {
 }
 
 .cm-icon-wrapper i {
-  color: #E2B84D;
+  color: var(--brand-primary-light);
   font-size: 1.5rem;
 }
 
 .cm-banner h2 {
-  color: white;
+  color: var(--text-main);
   font-size: 1.4rem;
   font-family: var(--font-sans);
   font-weight: 700;
@@ -691,12 +693,12 @@ footer {
 }
 
 .cm-banner p {
-  color: #b0a8a5;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
 .cm-form {
-  background: white;
+  background: var(--bg-color);
   padding: 25px;
   display: flex;
   flex-direction: column;
@@ -711,7 +713,7 @@ footer {
 }
 
 .cm-group label {
-  color: #B59535;
+  color: var(--brand-primary-light);
   font-size: 0.85rem;
   font-weight: 700;
   display: flex;
@@ -725,9 +727,9 @@ footer {
 
 .cm-group input, .cm-group textarea {
   width: 100%;
-  background: white;
-  border: 1px solid #e0e0e0;
-  color: #333;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
   padding: 12px 15px;
   border-radius: 8px;
   font-family: var(--font-sans);
@@ -737,16 +739,16 @@ footer {
 }
 
 .cm-group input::placeholder, .cm-group textarea::placeholder {
-  color: #999;
+  color: #666;
 }
 
 .cm-group input:focus, .cm-group textarea:focus {
-  border-color: #B59535;
-  background: white;
+  border-color: var(--brand-primary);
+  background: rgba(255,255,255,0.05);
 }
 
 .cm-submit-btn {
-  background: #25D366;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -759,12 +761,14 @@ footer {
   gap: 10px;
   margin-top: 10px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: var(--transition);
   width: 100%;
+  box-shadow: 0 5px 15px rgba(138, 31, 39, 0.2);
 }
 
 .cm-submit-btn:hover {
-  background: #20BA56;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(138, 31, 39, 0.4);
 }
 
 /* Mobile Bottom Nav */
