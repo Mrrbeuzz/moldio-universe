@@ -258,6 +258,16 @@
                 <h2 style="margin-bottom: 20px;">Visuels & Publicités</h2>
                 
                 <div class="admin-form" style="margin-bottom: 40px;">
+                    <h3>Logo du Site</h3>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">Remplace le texte en haut à gauche par votre image.</p>
+                    <div class="form-group">
+                        <input type="file" id="logo-file" accept="image/*">
+                    </div>
+                    <button class="btn-primary" id="save-logo-btn">Enregistrer Logo</button>
+                    <button class="btn-outline" id="remove-logo-btn" style="margin-top: 10px; width: 100%;">Remettre le texte par défaut</button>
+                </div>
+                
+                <div class="admin-form" style="margin-bottom: 40px;">
                     <h3>Barre d'Annonce (Top Bar)</h3>
                     <div class="form-group" style="margin-top: 15px;">
                         <input type="text" id="topbar-text" placeholder="Ex: Livraison gratuite ce week-end ! Laissez vide pour cacher.">

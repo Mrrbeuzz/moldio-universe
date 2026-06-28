@@ -69,6 +69,14 @@ async function loadSiteSettings() {
         if(docSnap.exists()) {
             const data = docSnap.data();
             
+            // Logo
+            const logoContainer = document.querySelector('.logo-container');
+            if(data.logo && data.logo.trim() !== '') {
+                logoContainer.innerHTML = `<img src="${data.logo}" alt="Moldio Universe" style="max-height: 40px; object-fit: contain;">`;
+            } else {
+                logoContainer.innerHTML = `<h2 style="color: var(--brand-primary); font-family: var(--font-serif);">Moldio Universe</h2>`;
+            }
+            
             const topBar = document.getElementById('top-bar');
             if(data.topbar && data.topbar.trim() !== '') {
                 document.getElementById('top-bar-text').textContent = data.topbar;

@@ -198,7 +198,7 @@ async function convertToWebP(file) {
 }
 
 // --- Settings & Visuals Logic ---
-let currentSettings = { slider: [], topbar: '', promoBanner: { image: '', link: '' } };
+let currentSettings = { slider: [], topbar: '', promoBanner: { image: '', link: '' }, logo: '' };
 
 async function loadSettingsAdmin() {
     try {
@@ -215,6 +215,27 @@ async function loadSettingsAdmin() {
         console.error("Erreur chargement paramètres:", e);
     }
 }
+
+document.getElementById('save-logo-btn').addEventListener('click', async (e) => {
+    const fileInput = document.getElementById('logo-file');
+    if(fileInput.files.length === 0) return alert("Sélectionnez une image.");
+    
+    e.target.textContent = "Patientez...";
+    const base64 = await convertToWebP(fileInput.files[0]);
+    currentSettings.logo = base64;
+    
+    await setDoc(doc(db, "site", "settings"), currentSettings, { merge: true });
+    e.target.textContent = "Enregistrer Logo";
+    fileInput.value = '';
+    alert("Logo mis à jour !");
+});
+
+document.getElementById('remove-logo-btn').addEventListener('click', async () => {
+    if(!confirm("Supprimer le logo et remettre le texte ?")) return;
+    currentSettings.logo = '';
+    await setDoc(doc(db, "site", "settings"), currentSettings, { merge: true });
+    alert("Logo supprimé !");
+});
 
 document.getElementById('save-topbar-btn').addEventListener('click', async (e) => {
     e.target.textContent = "Enregistrement...";
