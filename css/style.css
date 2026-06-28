@@ -1,18 +1,18 @@
 :root {
   /* Colors */
-  --bg-color: #0b0b0d; /* Very dark background */
-  --bg-color-alt: #16161a;
-  --text-main: #f5f5f0; /* Creamy white */
-  --text-muted: #a0a0b0;
+  --bg-color: #ffffff; /* Pure white */
+  --bg-color-alt: #f8f8f5; /* Very light cream */
+  --text-main: #1a1a1a; /* Dark charcoal */
+  --text-muted: #666666; /* Medium gray */
   
-  /* Brand Colors from Logo */
-  --brand-primary: #8a1f27; /* Burgundy */
-  --brand-primary-light: #b02a35;
-  --brand-accent: #c44536; /* Lighter red for contrast */
+  /* Brand Colors (Gold Theme) */
+  --brand-primary: #c5a059; /* Elegant Gold */
+  --brand-primary-light: #d4af37; /* Brighter gold */
+  --brand-accent: #b8860b; /* Darker gold */
   
   /* UI Elements */
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(0, 0, 0, 0.02);
+  --glass-border: rgba(0, 0, 0, 0.08);
   
   /* Typography */
   --font-sans: 'Outfit', sans-serif;
@@ -71,7 +71,7 @@ header {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(11, 11, 13, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--glass-border);
@@ -241,7 +241,7 @@ header {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 70% 30%, rgba(138, 31, 39, 0.4) 0%, rgba(11, 11, 13, 0.7) 80%);
+  background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2) 0%, rgba(248, 248, 245, 0.9) 80%);
 }
 
 .hero-content {
@@ -254,7 +254,7 @@ header {
   font-size: 4rem;
   line-height: 1.1;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -276,7 +276,7 @@ header {
   font-weight: 500;
   transition: var(--transition);
   display: inline-block;
-  box-shadow: 0 10px 20px rgba(138, 31, 39, 0.2);
+  box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); /* Gold shadow */
 }
 
 .btn-primary:hover {
@@ -528,7 +528,7 @@ header {
 }
 
 .qty-btn {
-  background: rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.05);
   width: 24px;
   height: 24px;
   border-radius: 4px;
@@ -551,9 +551,9 @@ header {
 
 .promo-container input {
   flex: 1;
-  background: rgba(255,255,255,0.05);
+  background: rgba(0,0,0,0.03);
   border: 1px solid var(--glass-border);
-  color: white;
+  color: var(--text-main);
   padding: 10px;
   border-radius: var(--radius-sm);
   outline: none;
@@ -588,7 +588,7 @@ header {
 
 .pm-image {
   flex: 1;
-  background: #111;
+  background: #f8f8f5;
 }
 
 .pm-image img {
@@ -644,9 +644,9 @@ header {
 }
 
 .comment-form input, .comment-form textarea {
-  background: rgba(255,255,255,0.05);
+  background: rgba(0,0,0,0.03);
   border: 1px solid var(--glass-border);
-  color: white;
+  color: var(--text-main);
   padding: 12px;
   border-radius: var(--radius-sm);
   font-family: inherit;
@@ -679,9 +679,9 @@ header {
 
 /* Form Styles */
 input, select, textarea {
-  background: rgba(255,255,255,0.05);
+  background: rgba(0,0,0,0.03);
   border: 1px solid var(--glass-border);
-  color: white;
+  color: var(--text-main);
   padding: 12px;
   border-radius: var(--radius-sm);
   font-family: inherit;
@@ -703,7 +703,7 @@ input:focus, select:focus, textarea:focus {
 
 /* Footer */
 footer {
-  background: #050505;
+  background: #f8f8f5;
   padding: 60px 0 30px;
   text-align: center;
   border-top: 1px solid var(--glass-border);
@@ -754,12 +754,12 @@ footer {
 }
 
 .cm-banner .close-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
 }
 
 .cm-icon-wrapper {
-  background: rgba(138, 31, 39, 0.15); /* Brand Primary with opacity */
+  background: rgba(197, 160, 89, 0.15); /* Gold Primary with opacity */
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -853,12 +853,12 @@ footer {
   cursor: pointer;
   transition: var(--transition);
   width: 100%;
-  box-shadow: 0 5px 15px rgba(138, 31, 39, 0.2);
+  box-shadow: 0 5px 15px rgba(197, 160, 89, 0.2);
 }
 
 .cm-submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(138, 31, 39, 0.4);
+  box-shadow: 0 8px 20px rgba(197, 160, 89, 0.4);
 }
 
 /* Mobile Bottom Nav */
@@ -881,7 +881,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(11, 11, 13, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--glass-border);

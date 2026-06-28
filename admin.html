@@ -21,8 +21,8 @@
         .panel.active { display: block; }
         
         /* Login Screen */
-        .login-screen { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; }
-        .login-box { background: #0b0b0d; padding: 40px; border-radius: 16px; border: 1px solid var(--glass-border); width: 100%; max-width: 400px; text-align: center; }
+        .login-screen { position: fixed; inset: 0; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .login-box { background: var(--bg-color-alt); padding: 40px; border-radius: 16px; border: 1px solid var(--glass-border); width: 100%; max-width: 400px; text-align: center; }
         .login-box input { width: 100%; margin-bottom: 20px; }
         .login-box h2 { margin-bottom: 30px; color: var(--brand-primary); }
 
@@ -30,7 +30,7 @@
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .stat-card { background: var(--bg-color-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--glass-border); }
         .stat-card h3 { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; }
-        .stat-card .value { font-size: 2rem; font-weight: bold; color: white; }
+        .stat-card .value { font-size: 2rem; font-weight: bold; color: var(--text-main); }
 
         /* Tables */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
