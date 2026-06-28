@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moldio Universe — Élégance & Style</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo-container">
+                <!-- Fallback text si l'image ne charge pas -->
+                <h2 style="color: var(--brand-primary); font-family: var(--font-serif);">Moldio Universe</h2>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="active">Accueil</a></li>
+                <li><a href="#shop">Boutique</a></li>
+                <li><a href="#about">À Propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <div class="cart-icon-wrapper" id="open-cart-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1 class="hero-title">L'Élégance à l'état pur.</h1>
+                <p class="hero-subtitle">Vêtements, chaussures, accessoires premium et même un espace gourmand. Découvrez l'univers Moldio.</p>
+                <a href="#shop" class="btn-primary">Découvrir la collection</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Nos Univers</h2>
+            <div class="category-grid" id="category-grid">
+                <!-- Injecté via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="shop">
+        <div class="container">
+            <h2 class="section-title">Collection Récente</h2>
+            <div class="product-grid" id="product-grid">
+                <!-- Injecté via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Slide Panel -->
+    <div class="modal-overlay" id="cart-modal">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h3>Votre Panier</h3>
+                <button class="close-btn" id="close-cart-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="cart-items" id="cart-items">
+                <!-- Injecté via JS -->
+            </div>
+
+            <div class="cart-footer">
+                <div class="promo-container">
+                    <input type="text" id="promo-code" placeholder="Code promo">
+                    <button class="btn-primary" id="apply-promo-btn" style="padding: 10px 15px; font-size: 0.8rem;">Appliquer</button>
+                </div>
+                <div class="cart-total">
+                    <span>Total</span>
+                    <span id="cart-total-price">0 FCFA</span>
+                </div>
+                <button class="btn-primary" id="checkout-btn" style="width: 100%;">Commander via WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div class="modal-overlay" id="product-detail-modal">
+        <div class="product-modal">
+            <button class="close-btn" id="close-product-btn" style="position: absolute; top: 20px; right: 20px; z-index: 10;"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="pm-image">
+                <img src="" id="pm-img" alt="Produit">
+            </div>
+            
+            <div class="pm-details">
+                <span class="pm-category" id="pm-category">Catégorie</span>
+                <h2 class="pm-title" id="pm-title">Nom du produit</h2>
+                <div class="pm-price" id="pm-price">0 FCFA</div>
+                <p class="pm-desc" id="pm-desc">Description complète du produit...</p>
+                
+                <button class="btn-primary" id="pm-add-to-cart">Ajouter au panier</button>
+
+                <div class="comments-section">
+                    <h3>Commentaires (<span id="pm-comments-count">0</span>)</h3>
+                    <div class="comment-form">
+                        <input type="text" id="comment-author" placeholder="Votre nom">
+                        <textarea id="comment-text" rows="3" placeholder="Laissez un avis sur ce produit..."></textarea>
+                        <button class="btn-primary" id="submit-comment-btn" style="padding: 10px;">Envoyer</button>
+                    </div>
+                    <div class="comment-list" id="comment-list">
+                        <!-- Injecté via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="products-section" id="about" style="background-color: var(--bg-color-alt);">
+        <div class="container">
+            <h2 class="section-title">À Propos de Moldio Universe</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center; color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;" id="about-content">
+                Chargement...
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="products-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center; color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;" id="contact-content">
+                Chargement...
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://wa.me/221777528463" class="btn-primary">Discuter sur WhatsApp <i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Moldio Universe. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Application Script -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

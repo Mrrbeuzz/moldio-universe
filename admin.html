@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Moldio Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { padding-top: 0; background: #050505; }
+        .admin-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: #0b0b0d; padding: 30px; border-right: 1px solid var(--glass-border); }
+        .sidebar h2 { color: var(--brand-primary); margin-bottom: 40px; font-family: var(--font-serif); }
+        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+        .menu-list a { display: block; padding: 10px; border-radius: 8px; color: var(--text-muted); transition: 0.3s; cursor: pointer; }
+        .menu-list a:hover, .menu-list a.active { background: rgba(255,255,255,0.05); color: white; }
+        
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; }
+        .panel { display: none; }
+        .panel.active { display: block; }
+        
+        /* Login Screen */
+        .login-screen { position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .login-box { background: #0b0b0d; padding: 40px; border-radius: 16px; border: 1px solid var(--glass-border); width: 100%; max-width: 400px; text-align: center; }
+        .login-box input { width: 100%; margin-bottom: 20px; }
+        .login-box h2 { margin-bottom: 30px; color: var(--brand-primary); }
+
+        /* Dashboard Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: var(--bg-color-alt); padding: 20px; border-radius: 12px; border: 1px solid var(--glass-border); }
+        .stat-card h3 { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; }
+        .stat-card .value { font-size: 2rem; font-weight: bold; color: white; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--glass-border); }
+        th { color: var(--brand-primary-light); font-weight: 500; }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
+        .status-pending { background: #d97706; color: white; }
+        .status-validated { background: #059669; color: white; }
+
+        /* Forms */
+        .admin-form { background: var(--bg-color-alt); padding: 30px; border-radius: 12px; border: 1px solid var(--glass-border); max-width: 600px; }
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 0.9rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-box">
+            <h2 style="font-family: var(--font-serif);">Moldio Admin</h2>
+            <input type="email" id="admin-email" placeholder="Email administrateur">
+            <input type="password" id="admin-password" placeholder="Mot de passe">
+            <button class="btn-primary" id="login-btn" style="width: 100%;">Se connecter</button>
+            <p id="login-error" style="color: red; margin-top: 15px; display: none;">Identifiants incorrects.</p>
+        </div>
+    </div>
+
+    <!-- Admin App -->
+    <div class="admin-layout" id="admin-app" style="display: none;">
+        <aside class="sidebar">
+            <h2>Moldio Admin</h2>
+            <ul class="menu-list">
+                <li><a class="nav-link active" data-target="dashboard"><i class="fa-solid fa-chart-line"></i> Tableau de bord</a></li>
+                <li><a class="nav-link" data-target="orders"><i class="fa-solid fa-receipt"></i> Commandes</a></li>
+                <li><a class="nav-link" data-target="products"><i class="fa-solid fa-box"></i> Produits</a></li>
+                <li><a class="nav-link" data-target="categories"><i class="fa-solid fa-tags"></i> Catégories</a></li>
+                <li><a class="nav-link" data-target="promo"><i class="fa-solid fa-ticket"></i> Codes Promo</a></li>
+                <li><a class="nav-link" data-target="content"><i class="fa-solid fa-file-pen"></i> Contenu</a></li>
+                <li style="margin-top: 50px;"><a id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            
+            <!-- Dashboard Panel -->
+            <div class="panel active" id="dashboard">
+                <h2 style="margin-bottom: 20px;">Vue d'ensemble</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Chiffre d'Affaires (Validé)</h3>
+                        <div class="value" id="total-revenue">0 FCFA</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Commandes en attente</h3>
+                        <div class="value" id="pending-orders-count">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Panel -->
+            <div class="panel" id="orders">
+                <h2 style="margin-bottom: 20px;">Commandes WhatsApp</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Vérifiez les commandes reçues sur WhatsApp et validez-les ici pour mettre à jour votre chiffre d'affaires.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Commande</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody">
+                        <!-- Injecté via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Products Panel -->
+            <div class="panel" id="products">
+                <h2 style="margin-bottom: 20px;">Gestion des Produits</h2>
+                <div class="admin-form" style="margin-bottom: 40px;">
+                    <h3>Ajouter un produit</h3>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:20px;">Les images seront automatiquement converties en WebP pour accélérer le site.</p>
+                    
+                    <div class="form-group">
+                        <label>Nom du produit</label>
+                        <input type="text" id="prod-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <select id="prod-category">
+                            <!-- Rempli par JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prix (FCFA)</label>
+                        <input type="number" id="prod-price">
+                    </div>
+                    <div class="form-group">
+                        <label>Image (JPG/PNG)</label>
+                        <input type="file" id="prod-image" accept="image/*">
+                    </div>
+                    <button class="btn-primary" id="add-product-btn">Ajouter au catalogue</button>
+                </div>
+                
+                <h3>Produits existants</h3>
+                <table style="margin-top: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Catégorie</th>
+                            <th>Prix</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-tbody">
+                        <!-- Injecté via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Categories Panel -->
+            <div class="panel" id="categories">
+                <h2 style="margin-bottom: 20px;">Gestion des Catégories</h2>
+                <div class="admin-form">
+                    <div class="form-group">
+                        <label>Nom de la catégorie</label>
+                        <input type="text" id="cat-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Icône FontAwesome (ex: fa-shirt)</label>
+                        <input type="text" id="cat-icon" placeholder="fa-tag">
+                    </div>
+                    <button class="btn-primary" id="add-category-btn">Ajouter Catégorie</button>
+                </div>
+                
+                <table style="margin-top: 40px;">
+                    <thead>
+                        <tr>
+                            <th>Icône</th>
+                            <th>Nom</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categories-tbody">
+                        <!-- Injecté via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Promo Panel -->
+            <div class="panel" id="promo">
+                <h2 style="margin-bottom: 20px;">Codes Promo</h2>
+                <div class="admin-form">
+                    <div class="form-group">
+                        <label>Code (ex: MOLDIO20)</label>
+                        <input type="text" id="promo-code-input" style="text-transform: uppercase;">
+                    </div>
+                    <div class="form-group">
+                        <label>Réduction (%)</label>
+                        <input type="number" id="promo-discount-input" min="1" max="99">
+                    </div>
+                    <button class="btn-primary" id="add-promo-btn">Créer le code</button>
+                </div>
+                
+                <table style="margin-top: 40px;">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Réduction</th>
+                            <th>État</th>
+                        </tr>
+                    </thead>
+                    <tbody id="promo-tbody">
+                        <!-- Injecté via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Content Panel -->
+            <div class="panel" id="content">
+                <h2 style="margin-bottom: 20px;">Édition des Pages</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Modifiez ici les textes des sections À Propos et Contact.</p>
+                
+                <div class="admin-form">
+                    <h3>Section À Propos</h3>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <textarea id="about-text" rows="5" placeholder="Votre texte à propos..."></textarea>
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;">Section Contact</h3>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <textarea id="contact-text" rows="5" placeholder="Vos informations de contact..."></textarea>
+                    </div>
+                    
+                    <button class="btn-primary" id="save-content-btn" style="margin-top: 20px;">Enregistrer le contenu</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>
