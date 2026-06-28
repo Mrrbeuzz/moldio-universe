@@ -95,15 +95,28 @@
                     <span id="cart-total-price">0 FCFA</span>
                 </div>
                 
-                <hr style="border: 1px solid var(--glass-border); margin: 20px 0;">
-                <div style="margin-bottom: 15px;">
-                    <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:5px;">Vos informations pour la livraison :</label>
-                    <input type="text" id="client-name" placeholder="Votre nom complet" style="width: 100%; margin-bottom: 10px; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;">
-                    <input type="tel" id="client-phone" placeholder="Votre numéro WhatsApp" style="width: 100%; margin-bottom: 10px; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;">
-                </div>
-
-                <button class="btn-primary" id="checkout-btn" style="width: 100%;">Commander via WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+                <button class="btn-primary" id="checkout-btn" style="width: 100%;">Valider la commande</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="product-modal" style="max-width: 500px; padding: 30px;">
+            <button class="close-btn" id="close-checkout-btn" style="position: absolute; top: 20px; right: 20px; z-index: 10;"><i class="fa-solid fa-xmark"></i></button>
+            <h2 style="margin-bottom: 20px; font-family: var(--font-serif); color: var(--brand-primary);">Détails de Livraison</h2>
+            
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="client-name" placeholder="Votre Prénom et Nom *" style="width: 100%; margin-bottom: 15px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;" required>
+                
+                <input type="tel" id="client-phone" placeholder="Votre numéro de téléphone *" style="width: 100%; margin-bottom: 15px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;" required>
+                
+                <input type="text" id="client-address" placeholder="Adresse de livraison complète *" style="width: 100%; margin-bottom: 15px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;" required>
+                
+                <textarea id="client-notes" rows="3" placeholder="Commentaire facultatif (ex: taille, couleur, instruction de livraison...)" style="width: 100%; margin-bottom: 20px; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 6px;"></textarea>
+            </div>
+
+            <button class="btn-primary" id="confirm-checkout-btn" style="width: 100%;">Confirmer et ouvrir WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
         </div>
     </div>
 

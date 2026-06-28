@@ -96,18 +96,37 @@ async function loadOrders() {
         // Trier par date la plus récente
         orders.sort((a,b) => b.createdAt - a.createdAt);
         
-        tbody.innerHTML = orders.map(o => `
+        tbody.innerHTML = orders.map(o => {
+            let statusText = 'En attente';
+            let statusClass = 'status-pending';
+            if (o.status === 'validated') {
+                statusText = 'Validée';
+                statusClass = 'status-validated';
+            } else if (o.status === 'cancelled') {
+                statusText = 'Annulée';
+                statusClass = 'status-pending';
+            }
+
+            return `
             <tr>
                 <td><strong>${o.orderId}</strong></td>
-                <td>${o.clientName || 'Inconnu'}<br><small style="color:var(--text-muted);">${o.clientPhone || 'N/A'}</small></td>
+                <td>
+                    ${o.clientName || 'Inconnu'}<br>
+                    <small style="color:var(--text-muted);">${o.clientPhone || 'N/A'}</small><br>
+                    <small style="color:var(--text-muted);">${o.clientAddress || 'Aucune adresse renseignée'}</small>
+                    ${o.clientNotes ? `<br><small style="color:var(--brand-primary);"><i class="fa-solid fa-comment-dots"></i> ${o.clientNotes}</small>` : ''}
+                </td>
                 <td>${o.createdAt ? new Date(o.createdAt.toDate()).toLocaleDateString() : 'N/A'}</td>
                 <td>${o.total} FCFA</td>
-                <td><span class="status-badge ${o.status === 'pending' ? 'status-pending' : 'status-validated'}">${o.status === 'pending' ? 'En attente' : 'Validée'}</span></td>
+                <td><span class="status-badge ${statusClass}" ${o.status === 'cancelled' ? 'style="background: rgba(255,50,50,0.2); color: #ff6b6b;"' : ''}>${statusText}</span></td>
                 <td>
-                    ${o.status === 'pending' ? `<button class="btn-primary" style="padding: 5px 10px; font-size: 0.8rem;" onclick="validateOrder('${o.id}')">Valider (Payé)</button>` : '-'}
+                    ${o.status === 'pending' ? `
+                        <button class="btn-primary" style="padding: 5px 10px; font-size: 0.8rem; margin-bottom: 5px; width:100%;" onclick="validateOrder('${o.id}')">Accepter</button><br>
+                        <button class="btn-primary" style="padding: 5px 10px; font-size: 0.8rem; width:100%; background: rgba(255,50,50,0.1); color: #ff6b6b; border: 1px solid rgba(255,50,50,0.3);" onclick="cancelOrder('${o.id}')">Annuler</button>
+                    ` : '-'}
                 </td>
             </tr>
-        `).join('');
+        `}).join('');
     } catch (e) {
         console.error(e);
     }
@@ -123,6 +142,20 @@ window.validateOrder = async (docId) => {
         loadOrders();
     } catch (e) {
         alert("Erreur lors de la validation.");
+        console.error(e);
+    }
+};
+
+window.cancelOrder = async (docId) => {
+    if(!confirm("Confirmez-vous l'annulation ou le refus de cette commande ?")) return;
+    try {
+        const orderRef = doc(db, "orders", docId);
+        await updateDoc(orderRef, {
+            status: "cancelled"
+        });
+        loadOrders();
+    } catch (e) {
+        alert("Erreur lors de l'annulation.");
         console.error(e);
     }
 };

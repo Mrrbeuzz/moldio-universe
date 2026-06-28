@@ -325,19 +325,36 @@ applyPromoBtn.addEventListener('click', async () => {
     applyPromoBtn.textContent = "Appliquer";
 });
 
-// --- Checkout (WhatsApp Hybrid System) ---
-checkoutBtn.addEventListener('click', async () => {
+// --- Checkout Modal Logic ---
+const checkoutModal = document.getElementById('checkout-modal');
+const closeCheckoutBtn = document.getElementById('close-checkout-btn');
+const confirmCheckoutBtn = document.getElementById('confirm-checkout-btn');
+
+checkoutBtn.addEventListener('click', () => {
     if(cart.length === 0) return alert("Votre panier est vide.");
-    
+    checkoutModal.classList.add('active');
+});
+
+closeCheckoutBtn.addEventListener('click', () => {
+    checkoutModal.classList.remove('active');
+});
+
+checkoutModal.addEventListener('click', (e) => {
+    if(e.target === checkoutModal) checkoutModal.classList.remove('active');
+});
+
+confirmCheckoutBtn.addEventListener('click', async () => {
     const clientName = document.getElementById('client-name').value.trim();
     const clientPhone = document.getElementById('client-phone').value.trim();
+    const clientAddress = document.getElementById('client-address').value.trim();
+    const clientNotes = document.getElementById('client-notes').value.trim();
     
-    if(!clientName || !clientPhone) {
-        return alert("Veuillez renseigner votre nom et votre numéro pour valider la commande.");
+    if(!clientName || !clientPhone || !clientAddress) {
+        return alert("Veuillez renseigner votre nom, numéro et adresse de livraison.");
     }
     
-    checkoutBtn.textContent = "Génération...";
-    checkoutBtn.disabled = true;
+    confirmCheckoutBtn.textContent = "Génération...";
+    confirmCheckoutBtn.disabled = true;
     
     // Générer un ID unique court
     const orderId = 'MU-' + Math.random().toString(36).substr(2, 6).toUpperCase();
@@ -347,6 +364,8 @@ checkoutBtn.addEventListener('click', async () => {
         orderId: orderId,
         clientName: clientName,
         clientPhone: clientPhone,
+        clientAddress: clientAddress,
+        clientNotes: clientNotes,
         items: cart,
         total: finalTotal,
         discount: currentDiscount,
@@ -363,11 +382,14 @@ checkoutBtn.addEventListener('click', async () => {
         saveCart();
         updateCartUI();
         cartModal.classList.remove('active');
+        checkoutModal.classList.remove('active');
         
         // Construire le message WhatsApp
         let msg = `*NOUVELLE COMMANDE MOLDIO UNIVERSE*\n\n`;
         msg += `*Client:* ${clientName}\n`;
         msg += `*Numéro:* ${clientPhone}\n`;
+        msg += `*Adresse:* ${clientAddress}\n`;
+        if (clientNotes) msg += `*Commentaire:* ${clientNotes}\n`;
         msg += `*Référence:* ${orderId}\n`;
         msg += `*Montant Total:* ${finalTotal} FCFA\n\n`;
         msg += `*Détails :*\n`;
@@ -387,6 +409,6 @@ checkoutBtn.addEventListener('click', async () => {
         alert("Une erreur est survenue lors de la création de votre commande.");
     }
     
-    checkoutBtn.innerHTML = `Commander via WhatsApp <i class="fa-brands fa-whatsapp"></i>`;
-    checkoutBtn.disabled = false;
+    confirmCheckoutBtn.innerHTML = `Confirmer et ouvrir WhatsApp <i class="fa-brands fa-whatsapp"></i>`;
+    confirmCheckoutBtn.disabled = false;
 });
