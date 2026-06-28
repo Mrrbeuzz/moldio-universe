@@ -86,6 +86,18 @@ async function loadCategories() {
 async function loadProducts() {
     try {
         const querySnapshot = await getDocs(collection(db, "products"));
+        if(querySnapshot.empty) {
+            // Fallback default products for demonstration
+            products = [
+                { id: 'demo1', name: 'Robe Élégante Bazin', price: 25000, category: 'Vêtements', imageUrl: 'https://images.unsplash.com/photo-1515347619362-e9326e033baf?auto=format&fit=crop&w=400&q=80', description: 'Superbe robe traditionnelle avec des finitions premium.' },
+                { id: 'demo2', name: 'Ensemble Collier Doré', price: 15000, category: 'Bijoux', imageUrl: 'https://images.unsplash.com/photo-1599643478524-fb66f724128d?auto=format&fit=crop&w=400&q=80', description: 'Parure élégante pour toutes vos cérémonies.' },
+                { id: 'demo3', name: 'Sac à Main Luxe', price: 30000, category: 'Sacs', imageUrl: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=400&q=80', description: 'Sac en cuir véritable avec grand espace de rangement.' },
+                { id: 'demo4', name: 'Tissu Wax Premium', price: 12000, category: 'Tissus', imageUrl: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=400&q=80', description: 'Motifs colorés, 100% coton de haute qualité.' }
+            ];
+            renderProducts(products);
+            return;
+        }
+        
         products = [];
         querySnapshot.forEach((doc) => {
             products.push({ id: doc.id, ...doc.data() });
